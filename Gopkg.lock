@@ -10,12 +10,12 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:d343c31f0b9e85391ef87a48705a49edd7e4db5ba9e969c76131e737fed5b437"
+  digest = "1:1a068527d780138794d6ea937b3d8963ac46eef30dcb2b70f9044332f71fc3a5"
   name = "github.com/RTradeLtd/config"
   packages = ["."]
   pruneopts = "UT"
-  revision = "0630f721dc207b399840e4031b5cbc4390a1a9c6"
+  revision = "0bc23259e87dfd95e2e069475f2d5ed34ea04954"
+  version = "v1.0.4-rc2"
 
 [[projects]]
   digest = "1:74776aa7694040c8af4c20a59e654c8c685d64cb361eb1386632664cdcfecaa2"
@@ -32,6 +32,14 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "7a707aa6805a8737f57d6623f62fe5b37862626a"
+
+[[projects]]
+  digest = "1:ac38156520a149ceac430b425ca9b1b3c3d87c823dfba619a20387d2b6a25b16"
+  name = "github.com/RTradeLtd/grpc"
+  packages = ["lens"]
+  pruneopts = "UT"
+  revision = "a873cc9dfc4d596ec742df1744b257d3b0a22f6d"
+  version = "v1.0.3"
 
 [[projects]]
   branch = "master"
@@ -181,9 +189,15 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:97df918963298c287643883209a2c3f642e6593379f97ab400c2a2e219ab647d"
+  digest = "1:4c0989ca0bcd10799064318923b9bc2db6b4d6338dd75f3f2d86c3511aaaf5cf"
   name = "github.com/golang/protobuf"
-  packages = ["proto"]
+  packages = [
+    "proto",
+    "ptypes",
+    "ptypes/any",
+    "ptypes/duration",
+    "ptypes/timestamp",
+  ]
   pruneopts = "UT"
   revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
   version = "v1.2.0"
@@ -1226,7 +1240,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:8cd7593dd237926a95eed53c6f873d92936c78369c8e5025d46ec5cc4a43e2a3"
+  digest = "1:0d4f8cb3700c4d2e7b4b236955f14ea8a9792b6a3f4d3ee77f7b7d5fc07902f5"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -1234,7 +1248,11 @@
     "html/atom",
     "html/charset",
     "http/httpguts",
+    "http2",
+    "http2/hpack",
     "idna",
+    "internal/timeseries",
+    "trace",
   ]
   pruneopts = "UT"
   revision = "8a410e7b638dca158bf9e766925842f6651ff828"
@@ -1287,6 +1305,49 @@
   version = "v0.3.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:56b0bca90b7e5d1facf5fbdacba23e4e0ce069d25381b8e2f70ef1e7ebfb9c1a"
+  name = "google.golang.org/genproto"
+  packages = ["googleapis/rpc/status"]
+  pruneopts = "UT"
+  revision = "94acd270e44e65579b9ee3cdab25034d33fed608"
+
+[[projects]]
+  digest = "1:ab8e92d746fb5c4c18846b0879842ac8e53b3d352449423d0924a11f1020ae1b"
+  name = "google.golang.org/grpc"
+  packages = [
+    ".",
+    "balancer",
+    "balancer/base",
+    "balancer/roundrobin",
+    "codes",
+    "connectivity",
+    "credentials",
+    "encoding",
+    "encoding/proto",
+    "grpclog",
+    "internal",
+    "internal/backoff",
+    "internal/channelz",
+    "internal/envconfig",
+    "internal/grpcrand",
+    "internal/transport",
+    "keepalive",
+    "metadata",
+    "naming",
+    "peer",
+    "resolver",
+    "resolver/dns",
+    "resolver/passthrough",
+    "stats",
+    "status",
+    "tap",
+  ]
+  pruneopts = "UT"
+  revision = "8dea3dc473e90c8179e519d91302d0597c0ca1d1"
+  version = "v1.15.0"
+
+[[projects]]
   digest = "1:76dc72490af7174349349838f2fe118996381b31ea83243812a97e5a0fd5ed55"
   name = "gopkg.in/dgrijalva/jwt-go.v3"
   packages = ["."]
@@ -1318,6 +1379,7 @@
     "github.com/RTradeLtd/config",
     "github.com/RTradeLtd/crypto",
     "github.com/RTradeLtd/go-ipfs-api",
+    "github.com/RTradeLtd/grpc/lens",
     "github.com/appleboy/gin-jwt",
     "github.com/aviddiviner/gin-limit",
     "github.com/c2h5oh/datasize",
@@ -1356,6 +1418,7 @@
     "github.com/streadway/amqp",
     "github.com/zsais/go-gin-prometheus",
     "golang.org/x/crypto/bcrypt",
+    "google.golang.org/grpc",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

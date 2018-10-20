@@ -93,4 +93,12 @@ const (
 	DuplicateEmailError = "email address already taken"
 	// DuplicateUserNameError is an error used whe na user attempts to register with an already taken user name
 	DuplicateUserNameError = "username is already taken"
+	// InvalidObjectIdentifierError is a generic error to indicate that the object identifier that was provided is invalid
+	InvalidObjectIdentifierError = "object identifier is of an invalid format"
+	// InvalidObjectTypeError is an error message when a user submits an incorrect type to be indexed
+	InvalidObjectTypeError = "object type is invalid, must be ipld"
+	// FailedToIndexError is an error message when a lens index request fails
+	FailedToIndexError = "an error occured while trying to index this object"
+	// FailedToSearchError is an error message when a lens search request fails
+	FailedToSearchError = "an error occured while submitting your search to lens"
 )

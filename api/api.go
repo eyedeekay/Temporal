@@ -7,6 +7,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/RTradeLtd/Temporal/lens"
 	"github.com/RTradeLtd/Temporal/rtfs"
 
 	limit "github.com/aviddiviner/gin-limit"
@@ -38,6 +39,7 @@ type API struct {
 	um      *models.UserManager
 	im      *models.IpnsManager
 	ipfs    *rtfs.IpfsManager
+	lc      *lens.Client
 	l       *log.Logger
 	service string
 }
@@ -114,7 +116,13 @@ func new(cfg *config.TemporalConfig, router *gin.Engine, debug bool, out io.Writ
 	if err != nil {
 		return nil, err
 	}
-
+	lensClient, err := lens.NewClient(
+		cfg.Endpoints.LensGRPC,
+		true,
+	)
+	if err != nil {
+		return nil, err
+	}
 	return &API{
 		cfg:     cfg,
 		service: "api",
@@ -123,6 +131,7 @@ func new(cfg *config.TemporalConfig, router *gin.Engine, debug bool, out io.Writ
 		dbm:     dbm,
 		um:      models.NewUserManager(dbm.DB),
 		im:      models.NewIPNSManager(dbm.DB),
+		lc:      lensClient,
 		ipfs:    ipfsManager,
 	}, nil
 }
