@@ -304,6 +304,16 @@ func (api *API) setupRoutes() {
 		}
 	}
 
+	// lens search engine
+	lens := v1.Group("/lens", authware...)
+	{
+		requests := lens.Group("/requests")
+		{
+			requests.POST("/index", api.submitIndexRequest)
+			requests.POST("/search", api.submitSearchRequest)
+		}
+	}
+
 	// admin
 	admin := v1.Group("/admin", authware...)
 	{
