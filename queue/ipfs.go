@@ -10,6 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"github.com/RTradeLtd/Temporal/mini"
+	"github.com/RTradeLtd/Temporal/utils"
 
 	"github.com/RTradeLtd/Temporal/rtfs"
 	"github.com/RTradeLtd/config"
@@ -389,12 +390,13 @@ func (qm *QueueManager) ProccessIPFSFiles(msgs <-chan amqp.Delivery, cfg *config
 		}
 		// if encrypted upload, do some special processing
 		if ipfsFile.Encrypted {
-			if _, err = ue.NewUpload(
+			upload, err := ue.NewUpload(
 				ipfsFile.UserName,
 				ipfsFile.FileName,
 				ipfsFile.NetworkName,
 				resp,
-			); err != nil {
+			)
+			if err != nil {
 				// we won't ack this, since we have already processed the upload and this is "extra processing"
 				// the object should still be removed from minio and ack+continue would prevent this from happening
 				// that being said, we will need to make sure we monitor errors properly
@@ -402,15 +404,18 @@ func (qm *QueueManager) ProccessIPFSFiles(msgs <-chan amqp.Delivery, cfg *config
 					WithField("error", err.Error()).
 					Error("failed to upload database with encrypted upload")
 			}
-			sizeString := strconv.FormatInt(ipfsFile.FileSize, 10)
+			createdOn := upload.CreatedAt.String()
+			sizeGB := utils.BytesToGigaBytes(ipfsFile.FileSize)
+			sizeGBString := fmt.Sprintf("%0.3f", sizeGB)
 			mongoUpdate := MongoUpdate{
 				DatabaseName:   cfg.Endpoints.MongoDB.DB,
 				CollectionName: cfg.Endpoints.MongoDB.UploadCollection,
 				Fields: map[string]string{
-					"size":          sizeString,
+					"size":          sizeGBString,
 					"user":          ipfsFile.UserName,
 					"fileName":      ipfsFile.FileName,
 					"fileNameLower": strings.ToLower(ipfsFile.FileName),
+					"createdOn":     createdOn,
 					"hash":          resp,
 					"encrypted":     "true",
 				},
